@@ -12,6 +12,7 @@ async fn main(){
         );
         return
     }
-    let path = args[1].to_string();
-    link_checker::check_links(path, THREADS).await.unwrap();
+    let input_path: String = args[1].to_string();
+    let output_path: String = args[2].to_string();
+    link_checker::check_links(input_path, THREADS, output_path).await.unwrap();
 }
