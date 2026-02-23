@@ -3,19 +3,6 @@
 version = 4
 
 [[package]]
-name = "Rust-Project-Linkchecker"
-version = "0.1.0"
-dependencies = [
- "futures",
- "rayon",
- "regex",
- "reqwest",
- "serde",
- "socket2",
- "tokio",
-]
-
-[[package]]
 name = "aho-corasick"
 version = "1.1.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1015,6 +1002,19 @@ dependencies = [
  "libc",
  "untrusted",
  "windows-sys 0.52.0",
+]
+
+[[package]]
+name = "rust-project-linkchecker"
+version = "0.1.0"
+dependencies = [
+ "futures",
+ "rayon",
+ "regex",
+ "reqwest",
+ "serde",
+ "socket2",
+ "tokio",
 ]
 
 [[package]]

@@ -1,0 +1,4 @@
+[Google](https://www.google.com)
+[error sending request for url (https://www.this_url_does_noy_exists.com/)](https://www.this_url_does_noy_exists.com)
+[Error: 404 Not Found](https://httpbin.org/status/404)
+[Error: 500 Internal Server Error](https://httpbin.org/status/500)

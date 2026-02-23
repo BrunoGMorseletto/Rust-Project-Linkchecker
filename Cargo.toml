@@ -1,5 +1,5 @@
 [package]
-name = "Rust-Project-Linkchecker"
+name = "rust-project-linkchecker"
 version = "0.1.0"
 edition = "2024"
 

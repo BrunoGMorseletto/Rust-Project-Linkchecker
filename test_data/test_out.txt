@@ -1,2 +1,0 @@
-[error sending request for url (https://www.this_url_does_noy_exists.com/)](https://www.this_url_does_noy_exists.com)
-[Google](https://www.google.com)
