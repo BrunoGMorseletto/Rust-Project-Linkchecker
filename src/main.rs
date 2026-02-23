@@ -1,6 +1,6 @@
 mod link_checker;
 use std::env;
-//the amount of threads to run at a given execution
+///he amount of threads to run at a given execution
 const THREADS: usize = 32;
 
 #[tokio::main]
