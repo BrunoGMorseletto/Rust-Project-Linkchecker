@@ -1,3 +1,4 @@
+//! This module provides tools for link checking and validation.
 use futures::stream::{self, StreamExt};
 use regex::Regex;
 use reqwest::Client;
@@ -6,7 +7,7 @@ use tokio::fs::File;
 use tokio::io::AsyncBufReadExt;
 use tokio::io::AsyncWriteExt;
 use tokio::io::BufReader;
-
+/// Function that receives a string that represents the path to the input file, the amount of threads to run and the path to the output file
 pub async fn check_links(
     input_path: String,
     threads: usize,
@@ -56,7 +57,8 @@ pub async fn check_links(
     }
     Ok(true)
 }
-
+/// Function that that searches for urls in given string, it also makes a simple request to the url
+/// return the url and the request result be it an error or a response
 async fn process_line(line: String) -> Result<(String, String), Error> {
     if line.contains("https") {
         let regex = Regex::new(r"\((.*?)\)").unwrap();
@@ -70,7 +72,8 @@ async fn process_line(line: String) -> Result<(String, String), Error> {
         Ok(("".to_string(), "".to_string()))
     }
 }
-
+///Async function that makes simple request to an url to check its status
+/// in case of being sucessful returns the content of the title html tag in the response
 async fn make_request_to(url: &str) -> Result<String, Error> {
     let client = Client::new();
     let request = client.get(url).build().unwrap();
