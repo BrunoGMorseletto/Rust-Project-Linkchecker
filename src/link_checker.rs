@@ -75,15 +75,22 @@ async fn make_request_to(url:&str)-> Result<String, Error>{
     let request = client.get(url).build().unwrap();
     let response = client.execute(request).await;
     if response.is_ok(){
-        let response_text = response.unwrap().text().await;
-        let title_regex = Regex::new(r"<title>(.*?)</title>").unwrap();
-        if let Some(title) = title_regex.captures(response_text.unwrap().as_str()){
-            println!("{}", &title[1]);
-            Ok( title[1].to_string())
+        let response = response.unwrap();
+        if response.status().is_success(){
+            let response_text = response.text().await;
+            let title_regex = Regex::new(r"<title>(.*?)</title>").unwrap();
+            if let Some(title) = title_regex.captures(response_text.unwrap().as_str()){
+                println!("{}", &title[1]);
+                Ok( title[1].to_string())
+            }else{
+                Ok("no title found".to_string())
+            }
         }else{
-            Ok("no title found".to_string())
+            let status = response.status();
+            Ok(format!("Error: {}", status))
         }
     }else{
+
         Ok(response.unwrap_err().to_string())
     }
 }
