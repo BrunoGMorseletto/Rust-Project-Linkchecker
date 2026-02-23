@@ -26,8 +26,8 @@ pub async fn check_links(
         .await;
 
     let output_file_create: Result<File, Error> = File::create(output_path).await;
-    if output_file_create.is_err() {
-        return Err(output_file_create.unwrap_err());
+    if let Err(e) = output_file_create {
+        return Err(e);
     }
     let mut output_file: File = output_file_create.unwrap();
     for url_result in line_processing_result.iter() {
@@ -58,7 +58,7 @@ pub async fn check_links(
 }
 
 async fn process_line(line: String) -> Result<(String, String), Error> {
-    if line.contains("https") == true {
+    if line.contains("https") {
         let regex = Regex::new(r"\((.*?)\)").unwrap();
         if let Some(url) = regex.captures(line.as_str()) {
             let request_result = make_request_to(&url[1]).await.unwrap();
@@ -75,22 +75,22 @@ async fn make_request_to(url: &str) -> Result<String, Error> {
     let client = Client::new();
     let request = client.get(url).build().unwrap();
     let response = client.execute(request).await;
-    if response.is_ok() {
-        let response = response.unwrap();
-        if response.status().is_success() {
-            let response_text = response.text().await;
-            let title_regex = Regex::new(r"<title>(.*?)</title>").unwrap();
-            if let Some(title) = title_regex.captures(response_text.unwrap().as_str()) {
-                println!("{}", &title[1]);
-                Ok(title[1].to_string())
+    match response {
+        Ok(response) => {
+            if response.status().is_success() {
+                let response_text = response.text().await;
+                let title_regex = Regex::new(r"<title>(.*?)</title>").unwrap();
+                if let Some(title) = title_regex.captures(response_text.unwrap().as_str()) {
+                    println!("{}", &title[1]);
+                    Ok(title[1].to_string())
+                } else {
+                    Ok("no title found".to_string())
+                }
             } else {
-                Ok("no title found".to_string())
+                let status = response.status();
+                Ok(format!("Error: {}", status))
             }
-        } else {
-            let status = response.status();
-            Ok(format!("Error: {}", status))
         }
-    } else {
-        Ok(response.unwrap_err().to_string())
+        Err(e) => Ok(e.to_string()),
     }
 }
