@@ -1,0 +1,6 @@
+this is a text file used to test the program
+
+[A link to google](https://www.google.com)
+[A fake url](https://www.this_url_does_noy_exists.com)
+[404 error url](https://httpbin.org/status/404)
+[500 error url](https://httpbin.org/status/500)

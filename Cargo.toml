@@ -1,6 +1,13 @@
 [package]
-name = "Rust-Project-Linkchecker"
+name = "rust-project-linkchecker"
 version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+futures = "0.3.31"
+rayon = "1.11.0"
+regex = "1.12.2"
+reqwest = "0.13.1"
+serde = "1.0.228"
+socket2 = "0.6.2"
+tokio = { version = "1.49.0", features = ["fs", "full", "io-util"] }
